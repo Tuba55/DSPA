@@ -1,0 +1,84 @@
+# Install required libraries
+!pip install nltk
+
+# Import required modules
+import nltk
+from nltk import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+import re
+
+# Read text file
+textfile = open('/content/Predictive analytics.txt')
+text = textfile.read()
+print(text)
+
+# Download all necessary NLTK data
+nltk.download('all')
+
+# Tokenization
+words = word_tokenize(text)
+print(words)
+
+# Stop words removal
+stop_words = set(stopwords.words("english"))
+filtered_list = [word for word in words if word.casefold() not in stop_words]
+print(filtered_list)
+
+# Stemming
+stemmer = PorterStemmer()
+stemmed_words = [stemmer.stem(word) for word in words]
+print(stemmed_words)
+
+# Parts of speech (POS) tagging
+pos = pos_tag(words)
+print(pos)
+
+# View POS tag details
+nltk.help.upenn_tagset()
+
+# Lemmatizing
+lemmatizer = WordNetLemmatizer()
+
+# Lemmatize words with different parts of speech
+print(lemmatizer.lemmatize("better", pos="a"))  # Adjective
+print(lemmatizer.lemmatize("running", pos="v"))  # Verb
+print(lemmatizer.lemmatize("flies", pos="n"))  # Noun
+print(lemmatizer.lemmatize("happiest", pos="a"))  # Adjective
+print(lemmatizer.lemmatize("larger", pos="a"))  # Adjective
+
+# Regular expressions (RegEx) usage
+# Match a string
+result = re.match('Meta AI', r'Meta AI aims to enhance user experience by offering personalized recommendations')
+print(result)
+
+# Search for a string
+result = re.search('founded', r'Andrew NG founded Coursera. He also founded...')
+print(result)
+
+# Find all occurrences
+result = re.findall('founded', r'Andrew NG founded Coursera. He also founded...')
+print(result)
+
+# Extract digits
+str1 = "2 million monthly visits in Jan'19."
+x = re.findall("\d", str1)
+print(x)
+if x:
+    print("Yes, there is at least one match!")
+else:
+    print("No match")
+
+# Extract non-digit characters
+x = re.findall("\D", str1)
+print(x)
+if x:
+    print("Yes, there is at least one match!")
+else:
+    print("No match")
+
+# Split the string using multiple spaces
+str2 = "2 million       monthly visits in Jan'19."
+x = re.split("\s+", str2)
+print(x[0])
